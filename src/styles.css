@@ -1,4 +1,12 @@
 /* You can add global styles to this file, and also import other style files */
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+/* all the themes:
+deeppurple-amber.css
+indigo-pink.css
+pink-bluegrey.css
+purple-green.css
+*/
+
 @font-face {
   font-family: "nikeglyph";
   src: url('assets/fonts/OneNikeGlyphs.woff');

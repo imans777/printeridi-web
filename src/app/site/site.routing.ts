@@ -5,8 +5,8 @@ import {SiteComponent} from './site.component';
 const Site_ROUTES: Routes = [
   {
     path: '', component: SiteComponent, children: [
-      {path: '', redirectTo: 'home', pathMatch: 'full'},
-      {path: 'home', loadChildren: 'app/site/home/home.module#HomeModule'},
+      // {path: '', redirectTo: 'home', pathMatch: 'full'},
+      // {path: 'home', loadChildren: 'app/site/home/home.module#HomeModule'},
   ]
   }
 ];
