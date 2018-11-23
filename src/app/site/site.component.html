@@ -1,10 +1,42 @@
-<div [style.margin-top]="(curWidth >= 960 ? 130 : 60) + 'px' ">
-  site module and component works too!
-  <button mat-mini-fab color="primary">
-    <mat-icon>
-      <!--<i class="fa fa-eraser"></i>-->
-      done
-    </mat-icon>
-  </button>
+<p>site module and component works too!</p>
+<div [style.margin-top]="(curWidth >= 960 ? 80 : 40) + 'px' ">
+  <!-- <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start center">
+    <div fxFlex="40">
+      <p>sample clicking button:</p>
+    </div>
+    <div fxFlex="10">
+      <button mat-mini-fab color="primary" (click)="normalClick()">
+        <mat-icon>
+          done
+        </mat-icon>
+      </button>
+    </div>
+    <div fxFlex="50">
+      {{answer}}
+    </div>
+  </div>
+  <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start center">
+    <div fxFlex="40">
+      <p>sample async clicking button:</p>
+    </div>
+    <div fxFlex="10">
+      <button mat-mini-fab color="primary" (click)="asyncClick()">
+        <i class="fa fa-eraser"></i>
+      </button>
+    </div>
+    <div fxFlex="50">
+      {{answerAsync}}
+    </div>
+  </div> -->
   <app-progress></app-progress>
+  <div>Every-3D-things' going to happen here:</div>
+  <div style="
+      width: 400px;
+      height: 400px;
+      margin-left: 100px;
+      margin-top: 100px;
+      border: 1px solid grey;
+    ">
+    <router-outlet></router-outlet>
+  </div>
 </div>

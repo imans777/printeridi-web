@@ -1,5 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
-@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+@import "~@angular/material/prebuilt-themes/indigo-pink";
 /* all the themes:
 deeppurple-amber.css
 indigo-pink.css
@@ -11,3 +11,5 @@ purple-green.css
   font-family: "nikeglyph";
   src: url('assets/fonts/OneNikeGlyphs.woff');
 }
+
+// TODO: create my own material theme according to the website

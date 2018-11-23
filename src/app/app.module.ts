@@ -1,6 +1,6 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {RouterModule} from '@angular/router';
 
 import {AppComponent} from './app.component';
@@ -13,7 +13,7 @@ import {HttpService} from './shared/services/http.service';
 import {SocketService} from './shared/services/socket.service';
 import {HttpClientModule} from '@angular/common/http';
 import {ProgressService} from './shared/services/progress.service';
-import { ProgressComponent } from './shared/components/progress/progress.component';
+import {AppRouting} from './app.routing';
 
 @NgModule({
   declarations: [
@@ -23,9 +23,10 @@ import { ProgressComponent } from './shared/components/progress/progress.compone
     BrowserAnimationsModule,
     BrowserModule,
     SiteModule,
-    RouterModule.forRoot([]),
-    FormsModule,
     HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
+    AppRouting,
     FlexLayoutModule,
     MatButtonModule,
     MatIconModule,
