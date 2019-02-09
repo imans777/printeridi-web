@@ -1,0 +1,50 @@
+<div *ngIf="data.usage === usage.shouldGoToPrintPage">
+  <h3 mat-dialog-title class="centerize">
+    <ptrl [text]="'Ongoing Print'"></ptrl>
+  </h3>
+  <div mat-dialog-content class="centerize">
+    <ptrl [text]="'There is already an ongoing printing'"></ptrl>
+    <ptrl [text]="'Redirecting to print page...'"></ptrl>
+  </div>
+  <div mat-dialog-actions class="centerize">
+    <button mat-icon-button [mat-dialog-close]="false" class="button">
+      <mat-icon>clear</mat-icon>
+    </button>
+  </div>
+</div>
+
+<div *ngIf="data.usage === usage.pageNotAllowed">
+  <h3 mat-dialog-title class="centerize">
+    <ptrl [text]="'Inaccessible Page'"></ptrl>
+  </h3>
+  <div mat-dialog-content class="centerize">
+    <ptrl [text]="'Accessing this page is not allowed'"></ptrl>
+  </div>
+  <div mat-dialog-actions class="centerize">
+    <button mat-icon-button [mat-dialog-close]="false" class="button">
+      <mat-icon>clear</mat-icon>
+    </button>
+  </div>
+</div>
+
+<div *ngIf="data.usage === usage.confirmPrint">
+    <h3 mat-dialog-title class="centerize">
+      <ptrl [text]="'Confirm Print'"></ptrl>
+    </h3>
+    <div mat-dialog-content class="centerize">
+      <p>
+        <ptrl [text]="'Are you sure you want to print this file?'"></ptrl>
+      </p>
+      <p>
+        <span>{{data && data.name || 'ERR'}}</span>
+      </p>
+    </div>
+    <div mat-dialog-actions class="centerize">
+      <button mat-icon-button [mat-dialog-close]="false" class="button">
+        <mat-icon>clear</mat-icon>
+      </button>
+      <button mat-icon-button [mat-dialog-close]="true" class="button">
+        <mat-icon>check</mat-icon>
+      </button>
+    </div>
+  </div>

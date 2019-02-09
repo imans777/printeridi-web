@@ -1,0 +1,20 @@
+<h4 class="title">
+  <ptrl [text]="'Select Camera:'"></ptrl>
+</h4>
+<div fxLayout="row wrap" fxLayoutAlign="space-around start">
+  <div fxFlex="150px" *ngFor="let cam of cameraList" class="card-wrapper-item">
+    <mat-card matRipple (click)="changeCameraTo(cam.link)" class="card-base" [class.active-item]="selectedItem.link === cam.link">
+      <mat-card-header class="card-name-header">
+        <mat-card-title>
+          <ptrl [text]="cam.name"></ptrl>
+        </mat-card-title>
+      </mat-card-header>
+      <img mat-card-image [src]="host + cam.icon">
+    </mat-card>
+  </div>
+</div>
+<mat-divider class="line-separator"></mat-divider>
+<div *ngIf="isFeeding" class="viewer-wrapper">
+  <img [src]="cameraLink" alt="" width="100%" height="100%">
+</div>
+<br><br><br>

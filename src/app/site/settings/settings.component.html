@@ -1,0 +1,117 @@
+
+<div>
+    <!-- <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start center">
+      <div fxFlex="40">
+        <p>sample clicking button:</p>
+      </div>
+      <div fxFlex="10">
+        <button mat-mini-fab color="primary" (click)="normalClick()">
+          <mat-icon>
+            done
+          </mat-icon>
+        </button>
+      </div>
+      <div fxFlex="50">
+        {{answer}}
+      </div>
+    </div>
+    <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start center">
+      <div fxFlex="40">
+        <p>sample async clicking button:</p>
+      </div>
+      <div fxFlex="10">
+        <button mat-mini-fab color="primary" (click)="asyncClick()">
+          <i class="fa fa-eraser"></i>
+        </button>
+      </div>
+      <div fxFlex="50">
+        {{answerAsync}}
+      </div>
+    </div> -->
+    <!-- <mat-sidenav-container class="example-container">
+      <mat-sidenav mode="side" opened>Sidenav content</mat-sidenav>
+      <mat-sidenav-content>Main content</mat-sidenav-content>
+    </mat-sidenav-container> -->
+    <app-upload-file></app-upload-file>
+    <app-progress></app-progress>
+    <button mat-button color="primary">Button</button>
+    <button mat-button color="accent">Button</button>
+    <button mat-button color="warn">Button</button>
+    <button mat-raised-button color="primary">Button</button>
+    <button mat-raised-button color="accent">Button</button>
+    <button mat-raised-button color="warn">Button</button>
+    <button mat-flat-button color="primary">Button</button>
+    <button mat-flat-button color="accent">Button</button>
+    <button mat-flat-button color="warn">Button</button>
+    <button mat-stroked-button color="primary">Button</button>
+    <button mat-stroked-button color="accent">Button</button>
+    <button mat-stroked-button color="warn">Button</button>
+    <mat-toolbar color="primary">
+      <mat-toolbar-row>
+        <span>Custom Toolbar</span>
+      </mat-toolbar-row>
+
+      <mat-toolbar-row>
+        <span>Second Line</span>
+        <span class="example-spacer"></span>
+        <mat-icon class="example-icon">verified_user</mat-icon>
+      </mat-toolbar-row>
+
+      <mat-toolbar-row>
+        <span>Third Line</span>
+        <span class="example-spacer"></span>
+        <mat-icon class="example-icon">favorite</mat-icon>
+        <mat-icon class="example-icon">delete</mat-icon>
+      </mat-toolbar-row>
+    </mat-toolbar>
+    <p class="font-persian">یک متن نمونه</p>
+    <div class="font-english">
+      <p>A sample Text</p>
+    </div>
+    <button mat-icon-button [matMenuTriggerFor]="menu">
+      <mat-icon>more_vert</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item>
+        <mat-icon>dialpad</mat-icon>
+        <span>Redial</span>
+      </button>
+      <button mat-menu-item disabled>
+        <mat-icon>voicemail</mat-icon>
+        <span>Check voicemail</span>
+      </button>
+      <button mat-menu-item>
+        <mat-icon>notifications_off</mat-icon>
+        <span>Disable alerts</span>
+      </button>
+    </mat-menu>
+    <mat-card class="example-card" matRipple>
+      <mat-card-header>
+        <div mat-card-avatar class="example-header-image"></div>
+        <mat-card-title>Shiba Inu</mat-card-title>
+        <mat-card-subtitle>Dog Breed</mat-card-subtitle>
+      </mat-card-header>
+      <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
+      <mat-card-content>
+        <p>
+          The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan.
+          A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was originally
+          bred for hunting.
+        </p>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-button>LIKE</button>
+        <button mat-button>SHARE</button>
+      </mat-card-actions>
+    </mat-card>
+    <div>Every-3D-things' going to happen here:</div>
+    <div style="
+        width: 400px;
+        height: 400px;
+        margin-left: 100px;
+        margin-top: 100px;
+        border: 1px solid grey;
+      ">
+      <router-outlet></router-outlet>
+    </div>
+  </div>

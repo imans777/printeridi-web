@@ -1,0 +1,40 @@
+{
+  "Main Page": "صفحه اصلی",
+  "Home": "خانه",
+  "Camera": "دوربین",
+  "Extrude": "اکسترود",
+  "Bedleveling": "بدلولینگ",
+  "Recent Prints": "پرینت‌های اخیر",
+  "Settings": "تنظیمات",
+  "Language": "زبان",
+
+  "Dashboard": "میزکار",
+  "No New Notifications": "هیچ اعلان جدیدی ندارید",
+  "Choose Entry": "انتخاب ورودی",
+  "Choose File": "انتخاب فایل",
+  "USB": "فلش",
+  "Uploads": "آپلودها",
+  "Upload File": "آپلود فایل",
+  "Browse...": "...جستجو",
+  "Submit": "ارسال",
+  "Print": "پرینت",
+  "View 3D": "نمایش سه‌بعدی",
+
+
+  "Select Camera:": ":دوربین مورد نظر خود را انتخاب کنید",
+  "Pi-Camera": "دوربین رزبری",
+  "Webcam": "وبکم",
+
+  "Data Could Not Be Loaded": "خطا در دریافت اطلاعات",
+  "Successfully Done": "با موفقیت انجام شد",
+
+  "Ongoing Print": "پرینت در حال انجام",
+  "There is already an ongoing printing": "هم اکنون پرینتی در حال انجام شدن است",
+  "Redirecting to print page...": "به صفحه پرینت منتقل می شوید",
+  "Inaccessible Page": "دسترسی غیرمجاز",
+  "Accessing this page is not allowed" : "دسترسی به این صفحه غیرمجاز است",
+  "Confirm Print": "تایید پرینت",
+  "Are you sure you want to print this file?": "آیا از پرینت گرفتن این فایل مطمئن هستید؟",
+
+  "some text": "یک متن عجیب"
+}

@@ -1,0 +1,56 @@
+.main-container {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  user-select: none;
+}
+
+.main-toolbar {
+  position: fixed;
+  z-index: 2;
+}
+
+.sidenav-container {
+  flex: 1;
+}
+
+.mobile-sidenav-container {
+  flex: 1 0 auto;
+}
+
+.sidenav {
+  margin-top: 56px;
+  min-width: 25vw;
+}
+
+.mobile-sidenav {
+  width: 80% !important;
+  margin-top: 48px;
+}
+
+.sidenav-content {
+  margin-top: 56px;
+  padding: 16px;
+}
+
+.language-label {
+  margin-right: 50px;
+}
+
+.language-selection {
+  width: 100px;
+}
+
+.lang-bottom-pos {
+  position: absolute;
+  bottom: 12px;
+  width: 100%;
+}
+
+.active-link {
+  color: rgba(200, 50, 50, 0.9);
+}

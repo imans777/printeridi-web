@@ -19,6 +19,7 @@
       "testTsconfig": "tsconfig.spec.json",
       "prefix": "app",
       "styles": [
+        "themedark.scss",
         "styles.scss",
         "assets/fonts/font-awesome/css/font-awesome.min.css",
         "assets/fonts/mat-icon-font/material-icons.css",
@@ -64,6 +65,10 @@
     },
     "service": {
       "spec": false
+    },
+    "serve": {
+      "host": "0.0.0.0",
+      "port": 4200
     }
   }
 }

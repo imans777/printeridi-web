@@ -32,7 +32,7 @@ GCodeImporter.importPath = function (path, callback) {
 }
 
 GCodeImporter.importText = function (gcode, callback) {
-  let gcodeModel = gcode; // TODO: actually get the model
+  let gcodeModel = gcode;
   callback(gcodeModel);
 }
 

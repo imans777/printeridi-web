@@ -2,8 +2,8 @@ function Constants() {
 }
 
 // the dimension and coefficient of render area
-Constants.width = 400;
-Constants.height = 400;
+Constants.width = 360;
+Constants.height = 360;
 Constants.dimensionCoef = 1.5;
 
 // the color(s) of hollowed

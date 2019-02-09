@@ -1,0 +1,10 @@
+.upload-wrapper {
+  margin: 1em;
+}
+
+.drop-zone {
+  font-weight: 600;
+  ::ng-deep * {
+    pointer-events: none; //added to fix bug that re-throws dragleave/dragenter by child elements
+  }
+}

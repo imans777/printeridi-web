@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild, ElementRef, Renderer2} from '@angular/core';
+import {Component, OnInit, ViewChild, ElementRef, Renderer2, Input, ChangeDetectionStrategy} from '@angular/core';
 import * as $ from 'jquery/dist/jquery.min';
 import * as THREE from '../../lib/gcode/three';
 window['$'] = $;
@@ -36,22 +36,37 @@ import {
 @Component({
   selector: 'app-gcode-viewer',
   templateUrl: './gcode-viewer.component.html',
-  styleUrls: ['./gcode-viewer.component.scss']
+  styleUrls: ['./gcode-viewer.component.scss'],
 })
 export class GcodeViewerComponent implements OnInit {
   width = Constants.width;
   height = Constants.height;
-  isRotating = true;
-  @ViewChild('container', {}) container: ElementRef;
+  isRotating = true; // TODO: for print page, this should be (false / controllable)
+  // better to be saved in pickledb in the server :-?
 
-  mIdx = 0;
-  models = [
-    'assets/batman.gcode',
-    'assets/batman_mask.gcode',
-    'assets/mount_export.gcode',
-    'assets/part.gcode',
-    'assets/retraction.gcode'
-  ];
+  @ViewChild('container', {}) container: ElementRef;
+  @Input()
+  set model(value) {
+    if (!value)
+      return;
+    this.addModel(value);
+  }
+
+  @Input()
+  set percent(value) { // 0 - 100
+    if (!value)
+      return;
+
+    if (this.gr)
+      this.gr.setIndex(
+        Math.floor(this.gr.viewModels.length * value / 100)
+      );
+  }
+
+
+  // accepts links like:
+  // 'http://192.168.1.3/api/download/files/part.gcode',
+  // 'http://192.168.1.3/api/download/usbs/SHB/part.gcode',
 
   gr;
   scene = null;
@@ -65,18 +80,17 @@ export class GcodeViewerComponent implements OnInit {
   Constants;
 
   constructor(private domRenderer: Renderer2) {
-    this.Constants = window['Constants'];
-    setTimeout(() => {
-      this.createScene();
-      this.addModel(this.models[this.mIdx]);
-    }, 0);
+    console.log("I'm here again!");
   }
 
   ngOnInit() {
+    this.Constants = window['Constants'];
+    setTimeout(() => {
+      this.createScene();
+    }, 0);
   }
 
   addModel(gcodeFile) {
-    this.mIdx++;
     const self = this;
     GCodeImporter.importPath(gcodeFile, gcode => {
       const gp = new GCodeParser();

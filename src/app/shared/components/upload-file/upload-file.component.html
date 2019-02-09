@@ -1,0 +1,29 @@
+<div fxLayout="row" class="upload-wrapper">
+  <mat-form-field tdFileDrop [disabled]="disabled" (fileDrop)="files = $event" (click)="fileInput.inputElement.click()"
+    (keyup.enter)="fileInput.inputElement.click()" (keyup.delete)="fileInput.clear()" (keyup.backspace)="fileInput.clear()"
+    flex>
+    <!-- Generic for multiple files is:
+    [value]="files?.length ? (files?.length + ' files') : files?.name" -->
+    <input matInput placeholder="select or drop files"
+    [value]="files && files['name'] || ''"
+      [disabled]="disabled" readonly />
+  </mat-form-field>
+  <button mat-icon-button *ngIf="files" (click)="fileInput.clear()" (keyup.enter)="fileInput.clear()">
+    <mat-icon>cancel</mat-icon>
+  </button>
+
+  <td-file-input class="push-left-sm push-right-sm" #fileInput [(ngModel)]="files" [disabled]="disabled" [multiple]="!single"
+    [hidden]="files" accept=".gcode">
+    <mat-icon>folder</mat-icon>
+    <span class="text-upper">
+      <ptrl [text]="'Browse...'"></ptrl>
+    </span>
+  </td-file-input>
+
+  <span *ngIf="files">
+    <button mat-raised-button color="accent" class="text-upper" (click)="submitFiles()">
+      <mat-icon>send</mat-icon>
+      <ptrl [text]="'Submit'"></ptrl>
+    </button>
+  </span>
+</div>

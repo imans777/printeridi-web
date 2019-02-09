@@ -1,7 +1,6 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {RouterModule} from '@angular/router';
 
 import {AppComponent} from './app.component';
 import {MatButtonModule, MatIconModule, MatProgressBarModule} from '@angular/material';
@@ -14,6 +13,11 @@ import {SocketService} from './shared/services/socket.service';
 import {HttpClientModule} from '@angular/common/http';
 import {ProgressService} from './shared/services/progress.service';
 import {AppRouting} from './app.routing';
+import {DataService} from './shared/services/data.service';
+import {TranslatorService} from './shared/services/translator.service';
+import {OverlayContainer} from '@angular/cdk/overlay';
+import {SpinnerService} from './shared/services/spinner.service';
+import {MessageService} from './shared/services/message.service';
 
 @NgModule({
   declarations: [
@@ -37,8 +41,16 @@ import {AppRouting} from './app.routing';
     HttpService,
     SocketService,
     ProgressService,
+    DataService,
+    TranslatorService,
+    SpinnerService,
+    MessageService,
   ],
   bootstrap: [AppComponent]
 })
 export class AppModule {
+  constructor(overlayContainer: OverlayContainer) {
+    overlayContainer.getContainerElement().classList.add('theme1');
+    overlayContainer.getContainerElement().classList.add('theme2');
+  }
 }

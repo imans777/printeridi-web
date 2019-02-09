@@ -1,0 +1,122 @@
+<!-- DASHBOARD -->
+<mat-card>
+  <mat-card-header class="card-name-header">
+    <mat-card-title>
+      <ptrl [text]="'Dashboard'"></ptrl>
+    </mat-card-title>
+  </mat-card-header>
+  <mat-card-content class="card-content-center">
+    <ptrl [text]="'No New Notifications'"></ptrl>
+  </mat-card-content>
+</mat-card>
+
+<mat-divider class="line-separator"></mat-divider>
+
+<!-- Choose Entry -->
+<div fxLayout="row" fxLayoutAlign="center center">
+  <div fxFlex="5" fxFlex.md="6" fxFlex.sm="8" fxFlex.xs="10">
+    <button mat-icon-button (click)="getEntries()">
+      <mat-icon>refresh</mat-icon>
+    </button>
+  </div>
+  <div fxFlex="15" fxFlex.md="20" fxFlex.sm="30" fxFlex.xs="40">
+    <h4 class="title">
+      <ptrl [text]="'Choose Entry'"></ptrl>
+    </h4>
+  </div>
+</div>
+<div fxLayout="row wrap" fxLayoutAlign="space-around start">
+  <div fxFlex="150px" *ngFor="let usb of entries; let l = last;" class="card-wrapper-item">
+    <mat-card matRipple (click)="changeEntry(usb)" class="card-base" [class.active-item]="selectedEntry === usb" style="height: 220px;">
+      <mat-card-header class="card-name-header">
+        <mat-card-title>
+          <ptrl [text]="usb"></ptrl>
+        </mat-card-title>
+      </mat-card-header>
+      <img mat-card-image [src]="l ? uploadImage : usbImage" alt="usb">
+    </mat-card>
+  </div>
+</div>
+
+<mat-divider class="line-separator"></mat-divider>
+
+<!-- Upload File -->
+<h4 class="title">
+  <ptrl [text]="'Upload File'"></ptrl>
+</h4>
+<div class="uploader-center">
+  <app-upload-file (onsubmit)="getEntries(); getUploadedFiles();"></app-upload-file>
+</div>
+
+<mat-divider class="line-separator"></mat-divider>
+
+<!-- Choose File -->
+<h4 class="title scroll-to" id="fileitems" #fileitems>
+  <ptrl [text]="'Choose File'"></ptrl>
+</h4>
+<div fxLayout="column" class="mat-elevation-z8 hide-cd-overflow">
+  <div>
+    <button mat-icon-button matTooltip="Back" (click)="changeDir(cd, false)" [disabled]="selectedEntry === cd || selectedEntry.toLowerCase() === 'uploads'">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    <span>{{cd}}</span>
+  </div>
+  <div>
+    <mat-table #table [dataSource]="dataSource">
+      <ng-container matColumnDef="type">
+        <mat-header-cell *matHeaderCellDef class="table-column">Type</mat-header-cell>
+        <mat-cell *matCellDef="let item" class="table-column">
+          <mat-icon [color]="item.type === 'folder' ? 'primary' : ''" [class.file-icon-color]="item.type === 'file'">
+            {{item.type === 'file' ? 'insert_drive_file' : 'folder'}}
+          </mat-icon>
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="name" matRipple>
+        <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
+        <mat-cell *matCellDef="let item">{{item.name}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="view">
+        <mat-header-cell *matHeaderCellDef class="table-column-wider">3D View</mat-header-cell>
+        <mat-cell *matCellDef="let item" class="table-column-wider">
+          <button *ngIf="item.type !== 'folder'" mat-icon-button class="success" (click)="viewItem($event, item)">
+            <mat-icon>visibility</mat-icon>
+          </button>
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="delete">
+        <mat-header-cell *matHeaderCellDef class="table-column">Delete</mat-header-cell>
+        <mat-cell *matCellDef="let item" class="table-column">
+          <button *ngIf="isUpload()" mat-icon-button color="warn" (click)="deleteItem($event, item)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </mat-cell>
+      </ng-container>
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selectItem(row)" class="table-row"
+        [class.active-item]="isSelected(row)" [class.mat-elevation-z16]="isSelected(row)"></mat-row>
+    </mat-table>
+    <mat-paginator #paginator [pageSize]="5" [pageSizeOptions]="[3, 5, 10]" [showFirstLastButtons]="false" class="paginator-">
+    </mat-paginator>
+  </div>
+</div>
+<div [class.print-button-wrapper]="ws.isMobile" *ngIf="!ws.isMobile || (ws.isMobile && shouldPrintButtonBeActive())">
+  <button class="print-button" mat-raised-button [disabled]="!shouldPrintButtonBeActive()" color="primary" (click)="makePrint()"
+    [class.mat-elevation-z24]="shouldPrintButtonBeActive()">
+    <ptrl [text]="'Print'"></ptrl>
+  </button>
+</div>
+
+<mat-divider class="line-separator"></mat-divider>
+
+<!-- 3d Viewer -->
+<h4 class="title scroll-to" id="view3d" #view3d>
+  <ptrl [text]="'View 3D'"></ptrl>
+</h4>
+<div [class.hide-area]="!modelFileLink" class="viewer-wrapper">
+  <app-gcode-viewer [model]="modelFileLink"></app-gcode-viewer>
+</div>
+<br>
+<button mat-icon-button (click)="scrollToPos('fileitems'); modelFileLink = ''" class="upward-button" [class.hide-area]="!modelFileLink">
+  <mat-icon>arrow_upward</mat-icon>
+</button>
+<br><br><br><br><br>

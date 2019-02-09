@@ -1,4 +1,4 @@
-<p>
-  main app component works!
+<div class="whole-app" [ngClass]="{'theme1': isTheme1, 'theme2': !isTheme1}">
+  <!-- <button mat-button (click)=toggle()>toggle</button> -->
   <router-outlet></router-outlet>
-</p>
+</div>

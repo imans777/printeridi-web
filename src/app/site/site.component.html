@@ -1,42 +1,50 @@
-<p>site module and component works too!</p>
-<div [style.margin-top]="(curWidth >= 960 ? 80 : 40) + 'px' ">
-  <!-- <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start center">
-    <div fxFlex="40">
-      <p>sample clicking button:</p>
-    </div>
-    <div fxFlex="10">
-      <button mat-mini-fab color="primary" (click)="normalClick()">
-        <mat-icon>
-          done
-        </mat-icon>
-      </button>
-    </div>
-    <div fxFlex="50">
-      {{answer}}
-    </div>
-  </div>
-  <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start center">
-    <div fxFlex="40">
-      <p>sample async clicking button:</p>
-    </div>
-    <div fxFlex="10">
-      <button mat-mini-fab color="primary" (click)="asyncClick()">
-        <i class="fa fa-eraser"></i>
-      </button>
-    </div>
-    <div fxFlex="50">
-      {{answerAsync}}
-    </div>
-  </div> -->
-  <app-progress></app-progress>
-  <div>Every-3D-things' going to happen here:</div>
-  <div style="
-      width: 400px;
-      height: 400px;
-      margin-left: 100px;
-      margin-top: 100px;
-      border: 1px solid grey;
-    ">
-    <router-outlet></router-outlet>
-  </div>
+<div class="main-container">
+  <mat-toolbar color="primary" class="main-toolbar">
+    <button mat-icon-button (click)="toggle(true)">
+      <mat-icon>settings</mat-icon>
+    </button>
+    <h1 style="margin: auto;">
+      <ptrl [text]="title"></ptrl>
+    </h1>
+    <button mat-icon-button (click)="toggle(false)">
+      <mat-icon>menu</mat-icon>
+    </button>
+  </mat-toolbar>
+  <mat-sidenav-container class="sidenav-container" [class.mobile-sidenav-container]="ws.isMobile">
+    <mat-sidenav class="sidenav" #leftnav [mode]="ws.isMobile ? 'over' : 'side'" [fixedInViewport]="ws.isMobile"
+      [class.mobile-sidenav]="ws.isMobile">
+      <mat-nav-list>
+        <a mat-list-item *ngFor="let lni of leftNavItems" (click)="changeLink(lni)" [routerLink]="lni.route"
+          [class.active-item]="selectedLink.route === lni.route">
+          <mat-icon class="icon-margin">{{lni.icon}}</mat-icon>
+          <ptrl [text]="lni.label"></ptrl>
+        </a>
+        <mat-list-item class="lang-bottom-pos" (click)="openSelectLang()">
+          <mat-icon class="icon-margin">language</mat-icon>
+          <mat-label class="language-label">
+            <ptrl [text]="'Language'"></ptrl>
+          </mat-label>
+          <mat-select #sellang [(value)]="selectedLanguage" (change)="changeLanguage()" class="language-selection">
+            <mat-option *ngFor="let lang of trS.languages" [value]="lang">
+              {{lang}}
+            </mat-option>
+          </mat-select>
+        </mat-list-item>
+      </mat-nav-list>
+    </mat-sidenav>
+    <mat-sidenav class="sidenav" #rightnav [mode]="ws.isMobile ? 'over' : 'side'" [fixedInViewport]="ws.isMobile"
+      [class.mobile-sidenav]="ws.isMobile" position="end">
+      <mat-nav-list>
+        <button mat-raised-button>
+          <ptrl [text]="'some text'"></ptrl>
+        </button>
+        <a *ngFor="let item of items" mat-list-item routerLink=".">{{item}}</a>
+      </mat-nav-list>
+    </mat-sidenav>
+    <mat-sidenav-content class="sidenav-content" id="matcontent">
+      <router-outlet (activate)="pageChanged($event)"></router-outlet>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
 </div>
+<block-ui>
+</block-ui>

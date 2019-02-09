@@ -1,0 +1,6 @@
+<div>
+  <ngb-progressbar class="progress-bar-animated" type="warning" [value]="percent" [striped]="true" [animated]="true">
+    <i>{{percent}}%</i>
+  </ngb-progressbar>
+  <app-gcode-viewer [model]="modelDir" [percent]="percent"></app-gcode-viewer>
+</div>
