@@ -1,14 +1,5 @@
 @import "../../../variables.scss";
 
-.title {
-  text-align: center;
-  margin-bottom: 16px;
-}
-
-.scroll-to {
-  padding-top: 16px;
-}
-
 .uploader-center {
   // uploader length is 310px :->
   margin-left: calc(50% - 155px);
@@ -37,16 +28,6 @@
   font-size: 1.4em;
 }
 
-.viewer-wrapper {
-  // overflow-x: overlay;
-  position: relative;
-  width: 360px;
-  left: calc(50% - 180px);
-}
-
-.hide-area {
-  visibility: hidden;
-}
 
 .print-button-wrapper {
   position: fixed;
@@ -73,3 +54,4 @@
   position: relative;
   z-index: -1;
 }
+

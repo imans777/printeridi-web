@@ -43,6 +43,17 @@
     </mat-sidenav>
     <mat-sidenav-content class="sidenav-content" id="matcontent">
       <router-outlet (activate)="pageChanged($event)"></router-outlet>
+
+      <!-- Gcode 3D Viewer -->
+      <div [class.hide-area]="!gcodeViewingLink" class="viewer-wrapper" #gcode3dviewer>
+        <h4 class="title scroll-to">
+          <ptrl [text]="'View 3D'"></ptrl>
+        </h4>
+        <app-gcode-viewer [model]="gcodeViewingLink" [percent]="gcodeIndex || 100"></app-gcode-viewer>
+        <br><br><br><br><br>
+      </div>
+      <br>
+
     </mat-sidenav-content>
   </mat-sidenav-container>
 </div>

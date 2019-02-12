@@ -98,9 +98,6 @@ export class HttpService {
   }
 
   catchRequest(e, method, url, throwError): Observable<any> {
-    // TODO: what about snack bar?
-    // combine it with throwError?
-    // or use separate args field?
     this.defaultErrorHandler(e, method, url);
 
     if (throwError)

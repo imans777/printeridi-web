@@ -68,6 +68,7 @@ import {CustomReuseStrategy} from 'app/shared/lib/custom-route-strategy';
     MatTooltipModule,
     BlockUIModule.forRoot(),
     NgbProgressbarModule.forRoot(),
+    // NgbModule.forRoot(),
     MatDialogModule,
     MatSnackBarModule,
   ],
@@ -87,7 +88,7 @@ import {CustomReuseStrategy} from 'app/shared/lib/custom-route-strategy';
     GenericDialogComponent,
   ],
   providers: [
-    {provide: RouteReuseStrategy, useClass: CustomReuseStrategy},
+    // {provide: RouteReuseStrategy, useClass: CustomReuseStrategy},
   ]
 })
 export class SiteModule {

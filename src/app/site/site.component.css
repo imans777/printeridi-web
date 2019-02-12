@@ -54,3 +54,11 @@
 .active-link {
   color: rgba(200, 50, 50, 0.9);
 }
+
+.viewer-wrapper {
+  /* overflow-x: overlay; */
+  position: relative;
+  width: 360px;
+  left: calc(50% - 180px);
+}
+

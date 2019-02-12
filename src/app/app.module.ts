@@ -18,6 +18,8 @@ import {TranslatorService} from './shared/services/translator.service';
 import {OverlayContainer} from '@angular/cdk/overlay';
 import {SpinnerService} from './shared/services/spinner.service';
 import {MessageService} from './shared/services/message.service';
+import {ViewerService} from './shared/services/viewer.service';
+import {PrintService} from './shared/services/print.service';
 
 @NgModule({
   declarations: [
@@ -45,6 +47,8 @@ import {MessageService} from './shared/services/message.service';
     TranslatorService,
     SpinnerService,
     MessageService,
+    ViewerService,
+    PrintService,
   ],
   bootstrap: [AppComponent]
 })

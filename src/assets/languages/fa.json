@@ -1,4 +1,5 @@
 {
+  "Page": "صفحه",
   "Main Page": "صفحه اصلی",
   "Home": "خانه",
   "Camera": "دوربین",
@@ -35,6 +36,16 @@
   "Accessing this page is not allowed" : "دسترسی به این صفحه غیرمجاز است",
   "Confirm Print": "تایید پرینت",
   "Are you sure you want to print this file?": "آیا از پرینت گرفتن این فایل مطمئن هستید؟",
+  "Confirm Stop": "تایید توقف",
+  "Are you sure you want to stop printing?": "آیا از توقف پرینت مطمئن هستید؟",
+  "Confirm Delete": "تایید حذف",
+  "Are you sure you want to delete this file?": "آیا از حذف این فایل مطمئن هستید؟",
+  "File Name": "نام فایل",
+  "Info": "اطلاعات",
+  "Time": "زمان",
+  "Status": "وضعیت",
+  "Print Completed": "اتمام پرینت",
+  "Specifications": "مشخصات",
 
   "some text": "یک متن عجیب"
 }

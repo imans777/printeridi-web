@@ -5,12 +5,14 @@ import {HttpService} from '../shared/services/http.service';
 import {TranslatorService} from 'app/shared/services/translator.service';
 import {MatSidenav, MatSelect, MatDialog} from '@angular/material';
 import {leftNavNormalItems, leftNavOnPrintItems} from 'app/shared/consts/leftnav.const';
-import {Router} from '@angular/router';
+import {Router, NavigationEnd} from '@angular/router';
 import {BlockUI, NgBlockUI} from 'ng-block-ui';
 import {SpinnerService} from 'app/shared/services/spinner.service';
 import {DataService} from 'app/shared/services/data.service';
 import {GenericDialogComponent} from 'app/shared/components/generic-dialog/generic-dialog.component';
 import {DialogType} from 'app/shared/enum/dialog.enum';
+import {ViewerService} from 'app/shared/services/viewer.service';
+import {PrintService} from 'app/shared/services/print.service';
 
 @Component({
   selector: 'app-site',
@@ -21,6 +23,7 @@ export class SiteComponent implements OnInit {
   @ViewChild('leftnav') leftNav: MatSidenav;
   @ViewChild('rightnav') rightNav: MatSidenav;
   @ViewChild('sellang') selLang: MatSelect;
+  @ViewChild('gcode3dviewer') gcode3DViewer: ElementRef;
   @BlockUI() bu: NgBlockUI;
 
   leftNavItems = leftNavNormalItems;
@@ -31,11 +34,16 @@ export class SiteComponent implements OnInit {
 
   items = Array.from({length: 10}, () => 'item');
 
+  // these are for gcode viewer
+  gcodeViewingLink = null;
+  gcodeIndex = 100;
+
   constructor(public ws: WindowService,
-    private ps: ProgressService,
     private hs: HttpService,
     private ds: DataService,
     public trS: TranslatorService,
+    private vs: ViewerService,
+    private ps: PrintService,
     private router: Router,
     private er: ElementRef,
     private spinnerService: SpinnerService,
@@ -45,6 +53,7 @@ export class SiteComponent implements OnInit {
       route: this.router.url,
       icon: 'default'
     };
+    this.routeChecking();
   }
 
   ngOnInit() {
@@ -54,6 +63,10 @@ export class SiteComponent implements OnInit {
     // If found a way to deal with this problem, this code will be used!
     // setTimeout(() => this.hideScrollbar(), 0);
 
+    // TODO: get settings whether to show 3d viewer or not
+    // if not, use this code:
+    // this.gcode3DViewer.nativeElement.remove();
+
     setTimeout(() => this.initializeAll());
   }
 
@@ -61,6 +74,21 @@ export class SiteComponent implements OnInit {
     this.initializeSpinner();
     this.initializeLanguage();
     this.initializeOnPrintPage();
+    this.initializeGcodeLink();
+  }
+
+  routeChecking() {
+    this.router.events.subscribe(route => {
+      if (route instanceof NavigationEnd)
+        return;
+
+      const canHaveGcodeViewer = ['/home', '/print-page'];
+      if (canHaveGcodeViewer.some(el => el === route['url'])) {
+      } else {
+        this.vs.updateGcodeLink(null);
+        this.vs.setGcodeIndex(100);
+      }
+    });
   }
 
   initializeSpinner() {
@@ -79,7 +107,7 @@ export class SiteComponent implements OnInit {
   }
 
   initializeOnPrintPage() {
-    this.ds.onPrintPage$.subscribe(isOnPrintPage => {
+    this.ps.onPrintPage$.subscribe(isOnPrintPage => {
       if (isOnPrintPage === null)
         return;
 
@@ -87,13 +115,21 @@ export class SiteComponent implements OnInit {
       if (isOnPrintPage) {
         this.leftNavItems = leftNavOnPrintItems;
         dialog = DialogType.shouldGoToPrintPage;
+        this.ps.isActivePrint = true;
       } else {
         this.leftNavItems = leftNavNormalItems;
         dialog = DialogType.pageNotAllowed;
       }
 
-      if (!this.leftNavItems.map(el => el['route']).some(el => this.router.url === el)) {
+      // return;
+      if (!this.leftNavItems.map(el => el['route']).includes(this.router.url)) {
         this.clearSelectedLink();
+        if (this.dialog.openDialogs.length)
+          return;
+
+        if (this.router.url === '/print-page' && this.ps.isActivePrint)
+          return;
+
         this.dialog.open(GenericDialogComponent, {
           data: {
             usage: dialog
@@ -106,6 +142,14 @@ export class SiteComponent implements OnInit {
     });
   }
 
+  initializeGcodeLink() {
+    this.vs.fileGcodeLink$.subscribe(link => {
+      this.gcodeViewingLink = link;
+    });
+    this.vs.gcodeIndex$.subscribe(idx => {
+      this.gcodeIndex = idx;
+    });
+  }
 
   hideScrollbar() {
     const el = this.er.nativeElement.querySelector('#matcontent');

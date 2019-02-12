@@ -1,6 +1,51 @@
-<div>
-  <ngb-progressbar class="progress-bar-animated" type="warning" [value]="percent" [striped]="true" [animated]="true">
-    <i>{{percent}}%</i>
-  </ngb-progressbar>
-  <app-gcode-viewer [model]="modelDir" [percent]="percent"></app-gcode-viewer>
+<h4 class="title">
+  <ptrl [text]="'Info'"></ptrl>
+</h4>
+<div fxLayout="row" fxLayoutAlign="center start">
+  <div fxFlex="50">
+    <div class="title">
+      <ptrl [text]="'File Name'"></ptrl>
+    </div>
+    <div class="title word-wrap">
+      {{fileDir || 'Unknown'}}
+    </div>
+  </div>
+  <div fxFlex="50">
+    <div class="title">
+      <ptrl [text]="'Time'"></ptrl>
+    </div>
+    <div class="title">
+      {{printTime}}
+    </div>
+  </div>
 </div>
+
+<mat-divider class="line-separator"></mat-divider>
+
+<h4 class="title">
+  <ptrl [text]="'Status'"></ptrl>
+</h4>
+<div>
+  <div class="progress progress-wrapper">
+    <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuemin="0"
+      aria-valuemax="100" [style.width.%]="percent">
+      <div class="font-en progress-inside">
+        <i>{{percent}}%</i>
+      </div>
+    </div>
+  </div>
+</div>
+<div fxLayout="row wrap" fxLayoutAlign="center start">
+  <div fxFlex="150px" class="card-wrapper-item">
+    <mat-card matRipple class="card-base-shorter" (click)="changePauseState()">
+      <img mat-card-image [src]="(printStatus === printStatusEnum.paused ? playImage : pauseImage)">
+    </mat-card>
+  </div>
+  <div fxFlex="150px" class="card-wrapper-item">
+    <mat-card matRipple class="card-base-shorter" (click)="stopPrint()">
+      <img mat-card-image [src]="stopImage">
+    </mat-card>
+  </div>
+</div>
+
+<mat-divider class="line-separator"></mat-divider>

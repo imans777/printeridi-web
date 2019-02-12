@@ -10,6 +10,7 @@ export class CustomReuseStrategy implements RouteReuseStrategy {
     console.debug('CustomReuseStrategy:shouldDetach', route);
     if (this.storedRoutes.some(el => route.url[0].path === el))
       return true;
+
     return false;
   }
 

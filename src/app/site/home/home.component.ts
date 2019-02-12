@@ -11,6 +11,8 @@ import {MessageService} from 'app/shared/services/message.service';
 import {MsgType} from 'app/shared/enum/msgtype.enum';
 import {DialogType} from 'app/shared/enum/dialog.enum';
 import {GenericDialogComponent} from 'app/shared/components/generic-dialog/generic-dialog.component';
+import {ViewerService} from 'app/shared/services/viewer.service';
+import {Router} from '@angular/router';
 
 const GCODE_EXT = '.gcode';
 const UPLOAD_PROTOCOL = 'upload://';
@@ -44,31 +46,39 @@ export class HomeComponent extends PageBase implements OnInit {
   // the couple of (type, name) is unique
   selectedFile = {type: '', name: ''};
 
-  // this is the link to where the gcode can be read for 3d viewing
+  // this is the link for the up button to become visible
   modelFileLink = '';
 
   constructor(private hs: HttpService, private scrollSer: ScrollToService,
     public ws: WindowService, private ds: DataService,
     private spins: SpinnerService, private dialog: MatDialog,
-    private ms: MessageService) {
+    private ms: MessageService, private vs: ViewerService,
+    private router: Router) {
     super('Main Page');
     this.usbImage = ServerMatch.STATIC + 'assets/usb.png';
     this.uploadImage = ServerMatch.STATIC + 'assets/cloud_upload.png';
   }
 
   ngOnInit() {
+    // TODO: get abs and then
+    // check for unfinished print
+    // check dialog with openDialogs.length
     this.getEntries();
     setTimeout(() => {
       this.dataSource.data = [];
       this.paginator._intl.itemsPerPageLabel = "";
       this.dataSource.paginator = this.paginator;
     }, 0);
+
+    this.vs.fileGcodeLink$.subscribe(link => {
+      this.modelFileLink = link;
+    });
   }
 
-  viewItem($event, item) {
+  async viewItem($event, item) {
     this.spins.en();
     $event.stopPropagation();
-    this.modelFileLink = this.makeModelDir(item.name);
+    await this.vs.updateGcodeLink(this.makeModelDir(item.name));
     setTimeout(() => {
       this.spins.dis();
       this.scrollToPos('view3d');
@@ -92,29 +102,42 @@ export class HomeComponent extends PageBase implements OnInit {
     if (this.selectedFile.name === item.name)
       this.clearSelectedFile();
 
-    this.hs.delete(`upload-file/${item.name}`).subscribe(data => {
-      this.ms.open(MsgType.info);
-      this.getUploadedFiles();
-    });
-  }
-
-  makePrint() {
-    if (this.isUpload()) {
-      this.ds.printingFileDir = UPLOAD_PROTOCOL + this.selectedFile.name;
-    } else {
-      this.ds.printingFileDir = this.cd + '/' + this.selectedFile.name;
-    }
-
     this.dialog.open(GenericDialogComponent, {
       data: {
-        usage: DialogType.confirmPrint,
-        name: this.selectedFile.name,
+        usage: DialogType.confirmDelete
       }
     }).afterClosed().subscribe(res => {
       if (!res) return;
 
-      this.hs.post('print', {cd: this.ds.printingFileDir, action: 'print'}).subscribe(data => {
-        this.ds.printingFileDownloadableDir = this.makeModelDir(this.selectedFile.name);
+      this.hs.delete(`upload-file/${item.name}`).subscribe(data => {
+        this.ms.open(MsgType.info);
+        this.getUploadedFiles();
+      });
+    });
+  }
+
+  makePrint() {
+    let printFileDir = '';
+    if (this.isUpload()) {
+      printFileDir = UPLOAD_PROTOCOL + this.selectedFile.name;
+    } else {
+      printFileDir = this.cd + '/' + this.selectedFile.name;
+    }
+
+    const dialog = this.dialog.open(GenericDialogComponent, {
+      data: {
+        usage: DialogType.confirmPrint,
+        name: this.selectedFile.name,
+      }
+    });
+    dialog.afterOpen().subscribe(res => {
+      this.vs.updatePrintFileDir(printFileDir);
+    });
+    dialog.afterClosed().subscribe(res => {
+      if (!res) return;
+
+      this.hs.post('print', {cd: printFileDir, action: 'print'}).subscribe(data => {
+        this.router.navigate(['/print-page']);
       });
     });
   }
@@ -216,14 +239,14 @@ export class HomeComponent extends PageBase implements OnInit {
   }
 
   makeModelDir(name) {
-    let modelFileLink = HttpService.Host + '/api/download/';
+    let modelLink = HttpService.Host + '/api/download/';
 
     if (this.isUpload())
-      modelFileLink += `files/${name}`;
+      modelLink += `files/${name}`;
     else
-      modelFileLink += `usbs/${this.cd}/${name}`;
+      modelLink += `usbs/${this.cd}/${name}`;
 
-    return modelFileLink;
+    return modelLink;
   }
 
   clearSelectedFile() {
@@ -231,7 +254,7 @@ export class HomeComponent extends PageBase implements OnInit {
       type: '',
       name: ''
     };
-    this.modelFileLink = '';
+    this.clearGcodeLink();
   }
 
   approveGCode() {
@@ -256,5 +279,9 @@ export class HomeComponent extends PageBase implements OnInit {
 
   shouldPrintButtonBeActive() {
     return (this.selectedFile && this.selectedFile.type === 'file' && this.isGCodeApproved());
+  }
+
+  clearGcodeLink() {
+    this.vs.updateGcodeLink(null);
   }
 }

@@ -88,13 +88,32 @@ body {
   margin-bottom: 16px;
 }
 
+.scroll-to {
+  padding-top: 16px;
+}
+
+
+.hide-area {
+  visibility: hidden;
+  height: 0;
+}
+
+.word-wrap {
+  overflow-wrap: break-word !important;
+}
+
 .card-wrapper-item {
   padding: 4px;
-  margin: auto;
+  // margin: auto;
 }
 
 .card-base {
   height: 200px;
+  cursor: pointer;
+}
+
+.card-base-shorter {
+  height: 150px;
   cursor: pointer;
 }
 
@@ -113,3 +132,16 @@ body {
   margin-bottom: 24px !important;
 }
 
+// bootstrap corrupted animation!
+@keyframes progress-bar-stripes {
+  from { background-position: 40px 0; }
+  to { background-position: 0 0; }
+}
+
+.progress-bar-animated {
+  animation: progress-bar-stripes 1s linear infinite;
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}

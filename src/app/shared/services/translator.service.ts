@@ -43,13 +43,13 @@ export class TranslatorService implements OnInit {
   }
 
   getCurrentLanguage() {
-    this.hs.get('language').subscribe(data => {
-      if (!this.languages.includes(data['lang'])) {
+    this.hs.post('interaction', {pkey: 'lang'}).subscribe(data => {
+      if (!this.languages.includes(data['pvalue'])) {
         console.error("language is not supported!");
         return;
       }
 
-      this.changeLanguageTo(data['lang']);
+      this.changeLanguageTo(data['pvalue']);
     });
   }
 
@@ -59,7 +59,7 @@ export class TranslatorService implements OnInit {
       return;
     }
 
-    this.hs.post('language', {'lang': lng}).subscribe(res => {
+    this.hs.put('interaction', {pkey: 'lang', pvalue: lng}).subscribe(res => {
       this.http.get(`${ServerMatch.STATIC}assets/languages/${lng}.json`).subscribe(data => {
         this.dict = data;
         this.lang$.next(lng);

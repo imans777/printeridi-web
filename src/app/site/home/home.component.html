@@ -25,7 +25,7 @@
     </h4>
   </div>
 </div>
-<div fxLayout="row wrap" fxLayoutAlign="space-around start">
+<div fxLayout="row wrap" fxLayoutAlign="center start">
   <div fxFlex="150px" *ngFor="let usb of entries; let l = last;" class="card-wrapper-item">
     <mat-card matRipple (click)="changeEntry(usb)" class="card-base" [class.active-item]="selectedEntry === usb" style="height: 220px;">
       <mat-card-header class="card-name-header">
@@ -59,7 +59,7 @@
     <button mat-icon-button matTooltip="Back" (click)="changeDir(cd, false)" [disabled]="selectedEntry === cd || selectedEntry.toLowerCase() === 'uploads'">
       <mat-icon>arrow_back</mat-icon>
     </button>
-    <span>{{cd}}</span>
+    <span class="word-wrap">{{cd}}</span>
   </div>
   <div>
     <mat-table #table [dataSource]="dataSource">
@@ -109,14 +109,7 @@
 <mat-divider class="line-separator"></mat-divider>
 
 <!-- 3d Viewer -->
-<h4 class="title scroll-to" id="view3d" #view3d>
-  <ptrl [text]="'View 3D'"></ptrl>
-</h4>
-<div [class.hide-area]="!modelFileLink" class="viewer-wrapper">
-  <app-gcode-viewer [model]="modelFileLink"></app-gcode-viewer>
-</div>
-<br>
-<button mat-icon-button (click)="scrollToPos('fileitems'); modelFileLink = ''" class="upward-button" [class.hide-area]="!modelFileLink">
+<div #view3d id="view3d"></div>
+<button mat-icon-button (click)="scrollToPos('fileitems'); clearGcodeLink();" class="upward-button" [class.hide-area]="!modelFileLink">
   <mat-icon>arrow_upward</mat-icon>
 </button>
-<br><br><br><br><br>
