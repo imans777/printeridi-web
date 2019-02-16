@@ -6,6 +6,7 @@ export enum DialogType {
   printCompleted,
   filamentFinished,
   confirmStopPrint,
+  askForUnfinishedPrint,
 
   needPreheating,
   needHoming,

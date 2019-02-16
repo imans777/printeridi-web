@@ -70,6 +70,45 @@ body {
   text-align: center;
 }
 
+.mat-slider-wrapper {
+  width: 10px !important
+}
+
+.mat-slider-track-wrapper {
+  width: 10px !important
+}
+
+.mat-slider-track-background {
+  width: 10px !important
+}
+
+.mat-slider-track-fill {
+  width: 10px !important
+}
+
+.mat-slider-ticks-container {
+  width: 5px !important;
+}
+
+.mat-slider-ticks {
+  width: 5px !important
+}
+
+.mat-slider-thumb-label {
+  transform: rotate(-45deg) !important;
+  border-radius: 100% !important;
+  left: -14px !important;
+  height: 32px;
+  width: 32px;
+}
+
+.mat-slider-thumb {
+  transform: scale(0) !important;
+}
+
+.mat-slider-thumb-label-text {
+  opacity: 1 !important;
+}
 
 // custom global css classes
 .whole-app {
@@ -86,6 +125,18 @@ body {
 .title {
   text-align: center;
   margin-bottom: 16px;
+}
+
+.centerize {
+  text-align: center;
+}
+
+.bigger-text {
+  font-size: 25px;
+}
+
+.fan-list-item > .mat-list-item-content {
+  justify-content: center;
 }
 
 .scroll-to {

@@ -2,16 +2,16 @@ import {Injectable} from '@angular/core';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 import {HttpService} from './http.service';
 import {PrintStatus} from '../enum/print-status.enum';
+import {PrintSpeed} from '../classes/print-speed.interface';
 
 @Injectable()
 export class PrintService {
   onPrintPage$ = new BehaviorSubject<boolean>(false);
-  printStatus$ = new BehaviorSubject<PrintStatus>(PrintStatus.idle);
+  printStatus$ = new BehaviorSubject<PrintStatus>(PrintStatus.printing);
   printPercent$ = new BehaviorSubject<number>(0);
-  zPosition = new BehaviorSubject<number>(0);
-
+  zPosition$ = new BehaviorSubject<number>(0);
+  printSpeed$ = new BehaviorSubject<PrintSpeed>({feedrate: 100, flow: 100});
   printTime$ = new BehaviorSubject<number>(0);
-  printTimeInterval;
 
   // a local client-specific to show that we're on the print page or not.
   // this is different from onPrintPage$ and has the following usage.
@@ -47,14 +47,14 @@ export class PrintService {
         this.getUsualPrintInfo();
         this.getTime();
         percentAndZInterval = setInterval(() => this.getUsualPrintInfo(), 5000);
-        timeInterval = setInterval(() => this.getTime(), 5000); // 1 * 60 * 1000);
+        timeInterval = setInterval(() => this.getTime(), 1 * 60 * 1000);
       } else {
-        if (percentAndZInterval) {
+        if (percentAndZInterval)
           clearInterval(percentAndZInterval);
+        if (timeInterval)
           clearInterval(timeInterval);
-        }
 
-        // get the final values (percent should be 100!)
+        // get the final values
         this.getUsualPrintInfo();
         this.getTime();
       }
@@ -64,6 +64,7 @@ export class PrintService {
   private getUsualPrintInfo() {
     this.getPercentAndZ();
     this.getPauseStatus();
+    this.getPrintSpeed();
   }
 
   getPauseStatus() {
@@ -84,7 +85,7 @@ export class PrintService {
       this.printPercent$.next(data['percentage']);
     });
     this.hs.get('get_z', {spin: false}).subscribe(data => {
-      this.zPosition.next(data['z']);
+      this.zPosition$.next(data['z']);
     });
   }
 
@@ -94,6 +95,15 @@ export class PrintService {
     });
   }
 
+  // also call when print speed changes
+  public getPrintSpeed() {
+    this.hs.get('speed', {spin: false}).subscribe((data: PrintSpeed) => {
+      this.printSpeed$.next(data);
+    });
+  }
+
+  // NOTE: it only updates onPrintPage$ value if the value changes
+  // so e.g. three (true, true, true) would only emit 'true' once!
   private getOnPrintPage() {
     let preVal = this.onPrintPage$.getValue();
     this.hs.post('on_print_page', {}, {spin: false}).subscribe(data => {

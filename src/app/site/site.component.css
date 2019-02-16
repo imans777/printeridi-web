@@ -47,6 +47,12 @@
 
 .lang-bottom-pos {
   position: absolute;
+  bottom: 60px;
+  width: 100%;
+}
+
+.theme-bottom-pos {
+  position: absolute;
   bottom: 12px;
   width: 100%;
 }
@@ -62,3 +68,34 @@
   left: calc(50% - 180px);
 }
 
+.rightnav-slider-container {
+  height: 310px;
+  text-align: center;
+}
+
+.margin-bottom {
+  margin-bottom: 16px;
+}
+
+.heat-slider {
+  height: 200px;
+  width: 56px;
+  padding: 0 !important;
+}
+
+.fan-toggle {
+  margin-left: 100px;
+}
+
+.thin-line-sep {
+  margin: 3px 0;
+}
+
+.temperature-card {
+  padding: 1px;
+  margin: 10px;
+}
+
+.hardware-item {
+  margin-bottom: 5px;
+}

@@ -130,7 +130,7 @@ GCodeParser.prototype.centerizeGCodes = function (gcode) {
 
   gcode.codes.forEach(g => {
     // ['X', 'Y', 'Z'] // -> no need to center around Z, I suppose :-?
-    // TODO: think about Z to see whether it's good to centerize that too
+    // TODO2: think about Z to see whether it's good to centerize that too
     ['X', 'Y']
       .forEach((letter, index) => {
         if (g.words.map(el => el.letter).includes(letter)) {

@@ -1,4 +1,6 @@
-export const leftNavNormalItems = [
+import {NavLink} from "../classes/navlink.interface";
+
+export const leftNavNormalItems: NavLink[] = [
   {
     label: 'Home',
     route: '/home',
@@ -20,13 +22,17 @@ export const leftNavNormalItems = [
     route: '/last-prints',
     icon: 'watch_later',
   }, {
+    label: 'Timelapse',
+    route: '/timelapse',
+    icon: 'timelapse',
+  }, {
     label: 'Settings',
     route: '/settings',
     icon: 'settings_applications',
   }
 ];
 
-export const leftNavOnPrintItems = [
+export const leftNavOnPrintItems: NavLink[] = [
   {
     label: 'Print',
     route: '/print-page',

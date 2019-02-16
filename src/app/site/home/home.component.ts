@@ -13,6 +13,8 @@ import {DialogType} from 'app/shared/enum/dialog.enum';
 import {GenericDialogComponent} from 'app/shared/components/generic-dialog/generic-dialog.component';
 import {ViewerService} from 'app/shared/services/viewer.service';
 import {Router} from '@angular/router';
+import {PrintService} from 'app/shared/services/print.service';
+import {DashboardNotification} from 'app/shared/classes/notification.interface';
 
 const GCODE_EXT = '.gcode';
 const UPLOAD_PROTOCOL = 'upload://';
@@ -36,6 +38,8 @@ export class HomeComponent extends PageBase implements OnInit {
   cd = '';
   entries = [];
   selectedEntry = '';
+  notifs: DashboardNotification[] = [];
+
 
   // from the length of this, we can determine if we're in uploaded or usb
   // 'delete' is disabled for usbs
@@ -49,20 +53,20 @@ export class HomeComponent extends PageBase implements OnInit {
   // this is the link for the up button to become visible
   modelFileLink = '';
 
+  //
+  tempUnfinishedPrintInfo;
+
   constructor(private hs: HttpService, private scrollSer: ScrollToService,
     public ws: WindowService, private ds: DataService,
     private spins: SpinnerService, private dialog: MatDialog,
     private ms: MessageService, private vs: ViewerService,
-    private router: Router) {
+    private router: Router, private ps: PrintService) {
     super('Main Page');
     this.usbImage = ServerMatch.STATIC + 'assets/usb.png';
     this.uploadImage = ServerMatch.STATIC + 'assets/cloud_upload.png';
   }
 
   ngOnInit() {
-    // TODO: get abs and then
-    // check for unfinished print
-    // check dialog with openDialogs.length
     this.getEntries();
     setTimeout(() => {
       this.dataSource.data = [];
@@ -72,6 +76,79 @@ export class HomeComponent extends PageBase implements OnInit {
 
     this.vs.fileGcodeLink$.subscribe(link => {
       this.modelFileLink = link;
+    });
+
+    this.tempUnfinishedPrintInfo = {cd: '', line: 0};
+    this.checkNotifications();
+  }
+
+  checkNotifications() {
+    // - unfinished notif
+    this.ds.getAbs().then(() => {
+      if (this.ds.abs)
+        return Promise.resolve(false);
+      return Promise.resolve(true);
+    }).then(shouldPrintInstantly => {
+      return this.getUnfinishedInfo().then(res => {
+        this.tempUnfinishedPrintInfo = res;
+
+        if (shouldPrintInstantly) {
+          this.callPrint(this.tempUnfinishedPrintInfo['cd'], this.tempUnfinishedPrintInfo['line']);
+          return;
+        }
+
+        this.notifs.push({
+          title: 'You have an unfinished print!',
+          desc: 'Tap here for more info',
+          action: this.checkForUnfinishedPrint,
+        });
+      });
+    }).catch(err => console.log(err));
+
+  }
+
+  openNotif(i) {
+    this.notifs[i].action.apply(this);
+    this.notifs.splice(i, 1);
+  }
+
+  checkForUnfinishedPrint() {
+    this.showUnfinishedDialog(this.tempUnfinishedPrintInfo['cd']).then(res => {
+      if (!res) {
+        this.hs.delete('print').subscribe();
+        return;
+      }
+
+      this.callPrint(this.tempUnfinishedPrintInfo['cd'], this.tempUnfinishedPrintInfo['line']);
+    }).catch(err => console.log(err));
+  }
+
+  getUnfinishedInfo() {
+    return new Promise((resolve, reject) => {
+      this.hs.post('print', {action: 'unfinished'}, {spin: false, throwError: true}).subscribe(res => {
+        if (!res['unfinished']['exist'])
+          reject('no unfinished print');
+        resolve({
+          cd: res['unfinished']['cd'],
+          line: res['unfinished']['line']
+        });
+      }, err => reject(err));
+    });
+  }
+
+  showUnfinishedDialog(cd) {
+    return new Promise((resolve, reject) => {
+      if (this.dialog.openDialogs.length)
+        return reject('already open dialog');
+
+      this.dialog.open(GenericDialogComponent, {
+        data: {
+          usage: DialogType.askForUnfinishedPrint,
+          cd
+        }
+      }).afterClosed().subscribe(res => {
+        return resolve(res);
+      });
     });
   }
 
@@ -130,15 +207,25 @@ export class HomeComponent extends PageBase implements OnInit {
         name: this.selectedFile.name,
       }
     });
-    dialog.afterOpen().subscribe(res => {
-      this.vs.updatePrintFileDir(printFileDir);
-    });
+    // dialog.afterOpen().subscribe(res => {
+    //   this.vs.updatePrintFileDir(printFileDir);
+    // });
     dialog.afterClosed().subscribe(res => {
       if (!res) return;
 
-      this.hs.post('print', {cd: printFileDir, action: 'print'}).subscribe(data => {
-        this.router.navigate(['/print-page']);
-      });
+      this.callPrint(printFileDir);
+    });
+  }
+
+  callPrint(cd, line = 0) {
+    this.hs.post('print', {cd, line, action: 'print'}).subscribe(data => {
+      // navigate to print page as a new print is started
+      this.ps.isActivePrint = true;
+      this.router.navigate(['/print-page']);
+
+      // temporarily set this to true
+      // to avoid inaccessible page error
+      // this.ps.onPrintPage$.next(true);
     });
   }
 

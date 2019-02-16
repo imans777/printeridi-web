@@ -80,7 +80,6 @@ export class GcodeViewerComponent implements OnInit {
   Constants;
 
   constructor(private domRenderer: Renderer2) {
-    console.log("I'm here again!");
   }
 
   ngOnInit() {

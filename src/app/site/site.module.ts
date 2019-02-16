@@ -19,7 +19,9 @@ import {
   MatPaginatorModule,
   MatTooltipModule,
   MatDialogModule,
-  MatSnackBarModule
+  MatSnackBarModule,
+  MatSliderModule,
+  MatSlideToggleModule
 } from '@angular/material';
 import {ProgressComponent} from '../shared/components/progress/progress.component';
 import {BrowserModule} from '@angular/platform-browser';
@@ -71,6 +73,8 @@ import {CustomReuseStrategy} from 'app/shared/lib/custom-route-strategy';
     // NgbModule.forRoot(),
     MatDialogModule,
     MatSnackBarModule,
+    MatSliderModule,
+    MatSlideToggleModule,
   ],
   declarations: [
     SiteComponent,

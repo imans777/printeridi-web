@@ -2,7 +2,7 @@
   <ptrl [text]="'Info'"></ptrl>
 </h4>
 <div fxLayout="row" fxLayoutAlign="center start">
-  <div fxFlex="50">
+  <div fxFlex="40">
     <div class="title">
       <ptrl [text]="'File Name'"></ptrl>
     </div>
@@ -10,12 +10,20 @@
       {{fileDir || 'Unknown'}}
     </div>
   </div>
-  <div fxFlex="50">
+  <div fxFlex="25" fxFlexOffset="10%">
     <div class="title">
       <ptrl [text]="'Time'"></ptrl>
     </div>
     <div class="title">
       {{printTime}}
+    </div>
+  </div>
+  <div fxFlex="25">
+    <div class="title">
+      <ptrl [text]="'Z'"></ptrl>
+    </div>
+    <div class="title">
+      {{zPos}}
     </div>
   </div>
 </div>
@@ -28,9 +36,9 @@
 <div>
   <div class="progress progress-wrapper">
     <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuemin="0"
-      aria-valuemax="100" [style.width.%]="percent">
+      aria-valuemax="100" [style.width.%]="percent || 0">
       <div class="font-en progress-inside">
-        <i>{{percent}}%</i>
+        <i>{{percent || 0}}%</i>
       </div>
     </div>
   </div>
@@ -47,5 +55,59 @@
     </mat-card>
   </div>
 </div>
+
+<mat-divider class="line-separator"></mat-divider>
+
+<h4 class="title">
+  <ptrl [text]="'Speed'"></ptrl>
+</h4>
+<div fxLayout="row wrap" fxLayoutAlign="center center" class="speed-slider-container">
+  <div fxFlex="150px" fxLayout="column">
+    <div fxFlex="20%" class="margin-bottom">
+      <ptrl [text]="'Flow'"></ptrl>
+    </div>
+    <div fxFlex="20%">
+      <span>{{maxSpeed['flow']}}%</span>
+    </div>
+    <div fxFlex="20%">
+      <mat-slider color="primary" class="speed-slider" (click)="$event.stopPropagation(); $event.preventDefault();"
+        (change)="changePrintSpeedSlider('flow')" [max]="maxSpeed['flow']" [min]="minSpeed['flow']" [step]="10"
+        [thumbLabel]="true" [tickInterval]="2" [(ngModel)]="printSpeed['flow']" [vertical]="true">
+      </mat-slider>
+    </div>
+    <div fxFlex="20%" class="margin-bottom">
+      <span>{{minSpeed['flow']}}%</span>
+    </div>
+    <div fxFlex="20%" class="margin-bottom">
+      <button mat-raised-button (click)="resetPrintSpeed('flow')">
+        <ptrl [text]="'Reset'"></ptrl>
+      </button>
+    </div>
+  </div>
+
+  <div fxFlex="150px" fxLayout="column">
+    <div fxFlex="20%" class="margin-bottom">
+      <ptrl [text]="'Feedrate'"></ptrl>
+    </div>
+    <div fxFlex="20%">
+      <span>{{maxSpeed['feedrate']}}%</span>
+    </div>
+    <div fxFlex="20%">
+      <mat-slider color="primary" class="speed-slider" (click)="$event.stopPropagation(); $event.preventDefault();"
+        (change)="changePrintSpeedSlider('feedrate')" [max]="maxSpeed['feedrate']" [min]="minSpeed['feedrate']"
+        [step]="10" [thumbLabel]="true" [tickInterval]="2" [(ngModel)]="printSpeed['feedrate']" [vertical]="true">
+      </mat-slider>
+    </div>
+    <div fxFlex="20%" class="margin-bottom">
+      <span>{{minSpeed['feedrate']}}%</span>
+    </div>
+    <div fxFlex="20%" class="margin-bottom">
+      <button mat-raised-button (click)="resetPrintSpeed('feedrate')">
+        <ptrl [text]="'Reset'"></ptrl>
+      </button>
+    </div>
+  </div>
+</div>
+
 
 <mat-divider class="line-separator"></mat-divider>

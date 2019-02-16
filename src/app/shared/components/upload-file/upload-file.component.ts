@@ -9,7 +9,7 @@ import {TdFileInputComponent} from '@covalent/core/file';
   styleUrls: ['./upload-file.component.scss']
 })
 export class UploadFileComponent implements OnInit {
-  // TODO: for now only works in single mode.
+  // TODO2: for now only works in single mode.
   // if multi-mode was needed, this must change!
   @Input() single = true;
   @Input() url = 'upload-file';
