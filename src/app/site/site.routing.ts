@@ -5,6 +5,7 @@ import {HomeComponent} from './home/home.component';
 import {CameraViewerComponent} from 'app/shared/components/camera-viewer/camera-viewer.component';
 import {SettingsComponent} from './settings/settings.component';
 import {PrintPageComponent} from './print-page/print-page.component';
+import {LastPrintsComponent} from './last-prints/last-prints.component';
 
 const Site_ROUTES: Routes = [
   {
@@ -19,7 +20,7 @@ const Site_ROUTES: Routes = [
       {path: 'camera', component: CameraViewerComponent},
       // {path: 'extrude', component: ''},
       // {path: 'bedleveling', component: ''},
-      // {path: 'last-prints', component: ''},
+      {path: 'last-prints', component: LastPrintsComponent},
       {path: 'settings', component: SettingsComponent},
       // {path: 'home', loadChildren: 'app/site/home/home.module#HomeModule'},
     ]

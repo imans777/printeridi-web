@@ -22,21 +22,12 @@
   max-width: 20%;
 }
 
-.table-row {
-  cursor: pointer;
-}
-
-.table-row:hover {
-  box-shadow: 0px 8px 10px -5px rgba(0, 0, 0, 0.2), 0px 16px 24px 2px rgba(0, 0, 0, 0.14), 0px 6px 30px 5px rgba(0, 0, 0, 0.12);
-}
-
 .print-button {
   width: 100%;
   height: 60px;
   margin-top: 5px;
   font-size: 1.4em;
 }
-
 
 .print-button-wrapper {
   position: fixed;
@@ -57,10 +48,5 @@
 
 .hide-cd-overflow {
   overflow: hidden;
-}
-
-.paginator-go-behind {
-  position: relative;
-  z-index: -1;
 }
 

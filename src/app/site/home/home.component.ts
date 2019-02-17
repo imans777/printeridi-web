@@ -68,11 +68,7 @@ export class HomeComponent extends PageBase implements OnInit {
 
   ngOnInit() {
     this.getEntries();
-    setTimeout(() => {
-      this.dataSource.data = [];
-      this.paginator._intl.itemsPerPageLabel = "";
-      this.dataSource.paginator = this.paginator;
-    }, 0);
+    this.initTable();
 
     this.vs.fileGcodeLink$.subscribe(link => {
       this.modelFileLink = link;
@@ -80,6 +76,14 @@ export class HomeComponent extends PageBase implements OnInit {
 
     this.tempUnfinishedPrintInfo = {cd: '', line: 0};
     this.checkNotifications();
+  }
+
+  initTable() {
+    setTimeout(() => {
+      this.dataSource.data = [];
+      this.paginator._intl.itemsPerPageLabel = "";
+      this.dataSource.paginator = this.paginator;
+    }, 0);
   }
 
   checkNotifications() {

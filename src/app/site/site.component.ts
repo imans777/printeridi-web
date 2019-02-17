@@ -285,7 +285,10 @@ export class SiteComponent extends PageBase implements OnInit {
   }
 
   openMove() {
-    // TODO:
+    // TODO: incomplete
+    this.hs.post('home', {axis: 'All'}).subscribe(res => {
+      this.ms.open(MsgType.info);
+    });
   }
 
   releaseMotors() {

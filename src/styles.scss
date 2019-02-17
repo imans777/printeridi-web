@@ -183,6 +183,22 @@ body {
   margin-bottom: 24px !important;
 }
 
+
+// table customizations
+.table-row {
+  cursor: pointer;
+}
+
+.table-row:hover {
+  box-shadow: 0px 8px 10px -5px rgba(0, 0, 0, 0.2), 0px 16px 24px 2px rgba(0, 0, 0, 0.14), 0px 6px 30px 5px rgba(0, 0, 0, 0.12);
+}
+
+// paginator won't be selectable!
+// .paginator-go-behind {
+//   position: relative;
+//   z-index: -1;
+// }
+
 // bootstrap corrupted animation!
 @keyframes progress-bar-stripes {
   from { background-position: 40px 0; }

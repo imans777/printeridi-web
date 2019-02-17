@@ -18,7 +18,7 @@ export class HttpService {
   };
 
   constructor(private http: HttpClient, private spins: SpinnerService) {
-    HttpService.Host = isDevMode() ? 'http://192.168.1.6' : '';
+    HttpService.Host = isDevMode() ? 'http://192.168.1.4' : '';
   }
 
   get(url, args: RequestArgument = this.defaultRequestArgument): Observable<any> {

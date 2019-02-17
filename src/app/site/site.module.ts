@@ -42,6 +42,7 @@ import {NgbProgressbarModule, NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {GenericDialogComponent} from 'app/shared/components/generic-dialog/generic-dialog.component';
 import {RouteReuseStrategy} from '@angular/router';
 import {CustomReuseStrategy} from 'app/shared/lib/custom-route-strategy';
+import { LastPrintsComponent } from './last-prints/last-prints.component';
 
 @NgModule({
   imports: [
@@ -87,6 +88,7 @@ import {CustomReuseStrategy} from 'app/shared/lib/custom-route-strategy';
     SettingsComponent,
     PrintPageComponent,
     GenericDialogComponent,
+    LastPrintsComponent,
   ],
   entryComponents: [
     GenericDialogComponent,

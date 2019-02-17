@@ -99,7 +99,7 @@ export class GcodeViewerComponent implements OnInit {
       self.gr = new GCodeRenderer();
       const gcodeObj = self.gr.render(changed);
       self.layerIndex = self.gr.viewModels.length - 1;
-      self.gr.setIndex(self.layerIndex);
+      self.gr.setIndex(self.layerIndex - 2);
 
       self.camera.position.z = 500;
       self.camera.position.y = -1000;

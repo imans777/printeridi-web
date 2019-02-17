@@ -1,0 +1,72 @@
+<div fxLayout="column" class="mat-elevation-z8 hide-cd-overflow">
+  <div>
+    <h4 class="title">
+      <ptrl [text]="'Recent Prints'"></ptrl>
+    </h4>
+  </div>
+  <div>
+    <mat-table #table [dataSource]="dataSource">
+      <ng-container matColumnDef="num">
+        <mat-header-cell *matHeaderCellDef class="table-column-narrow">
+          <ptrl [text]="'Num'"></ptrl>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let item" class="table-column-narrow">
+          {{item.num}}
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="file_name">
+        <mat-header-cell *matHeaderCellDef>
+          <ptrl [text]="'Name'"></ptrl>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let item">
+          {{item.file_name}}
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="filament_type">
+        <mat-header-cell *matHeaderCellDef class="table-column">
+          <ptrl [text]="'Filament'"></ptrl>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let item" class="table-column">
+          {{item.filament_type}}
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="time">
+        <mat-header-cell *matHeaderCellDef class="table-column">
+          <ptrl [text]="'Time'"></ptrl>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let item" class="table-column">
+          {{item.time}}
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="temperature">
+        <mat-header-cell *matHeaderCellDef class="table-column-wider">
+          <ptrl [text]="'Temperature'"></ptrl>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let item" class="table-column-wider">
+          {{item.temperature}}
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="is_finished">
+        <mat-header-cell *matHeaderCellDef class="table-column-narrow">
+          <ptrl [text]="'Finished'"></ptrl>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let item" class="table-column-narrow">
+          <mat-icon *ngIf="item.is_finished === 'Yes'">check</mat-icon>
+          <mat-icon *ngIf="item.is_finished === 'No'">clear</mat-icon>
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;" class="table-row"></mat-row>
+    </mat-table>
+
+    <mat-paginator #paginator [pageSize]="5" [pageSizeOptions]="[3, 5, 10]" [showFirstLastButtons]="false"
+      class="paginator-go-behind">
+    </mat-paginator>
+  </div>
+</div>
